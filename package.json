@@ -1,6 +1,6 @@
 {
   "name": "block-roles",
-  "version": "1.0.0",
+  "version": "0.420.0",
   "main": "block-roles.js",
   "scripts": {
     "build": "webpack --mode production",
