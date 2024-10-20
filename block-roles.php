@@ -117,12 +117,21 @@ function block_roles_settings_page() {
             <input type="checkbox" class="individual-toggle" name="block_roles_settings[<?php echo esc_attr($block_name); ?>][<?php echo esc_attr($role_slug); ?>]"
             data-role="<?php echo esc_attr($role_slug); ?>" data-category="<?php echo esc_attr($category); ?>"
             <?php
-            if (isset($block_roles_settings[$block_name][$role_slug])) {
-                checked($block_roles_settings[$block_name][$role_slug], 1);
-                $status = 'Available';
-            } else {
-                $status = 'Hidden';
-            }
+            // Check if there are no saved settings at all
+$default_all_checked = empty($block_roles_settings);
+
+if (isset($block_roles_settings[$block_name][$role_slug])) {
+    checked($block_roles_settings[$block_name][$role_slug], 1);
+    $status = $block_roles_settings[$block_name][$role_slug] == 1 ? 'Available' : 'Hidden';
+} else {
+    // Default to checked (Available) only if no settings are saved
+    if ($default_all_checked) {
+        echo 'checked';
+        $status = 'Available';
+    } else {
+        $status = 'Hidden';
+    }
+}
             ?>
             value="1">
             <span class="slider round"></span>
