@@ -184,7 +184,7 @@ $exportFileName = $siteUrl . '-block-roles-' . $currentDate;
 
 <!-- Styled button to trigger the file input -->
 <button type="button" id="import-block-roles-button" class="button button-secondary" data-tooltip="Upload a block-roles.json file to Import Settings from another WordPress website.">
-    Import Settings
+    <?php esc_html_e('Import Settings', 'acemedia-block-roles'); ?>
 </button>
 
 </div>
@@ -248,13 +248,18 @@ function acemedia_block_roles_save_settings() {
     // Get posted data
     $block_roles_settings = isset($_POST['block_roles_settings']) ? $_POST['block_roles_settings'] : [];
 
+    // Sanitize settings
+    $sanitized_settings = array_map(function($roles) {
+        return array_map('absint', $roles);
+    }, $block_roles_settings);
+
     // Save settings
-    update_option('block_roles_settings', $block_roles_settings);
+    update_option('block_roles_settings', $sanitized_settings);
 
     // Send a success response with updated settings
     wp_send_json_success([
-        'message' => __('Settings saved!', 'acemedia-block-roles'),
-        'updated_settings' => $block_roles_settings // Return updated settings
+        'message' => esc_html__('Settings saved!', 'acemedia-block-roles'),
+        'updated_settings' => $sanitized_settings // Return updated settings
     ]);
 }
 add_action('wp_ajax_acemedia_block_roles_save_settings', 'acemedia_block_roles_save_settings');
@@ -269,16 +274,21 @@ function acemedia_block_roles_import_settings() {
 
     // Validate the data is in the expected format
     if (!is_array($block_roles_settings)) {
-        wp_send_json_error(__('Invalid settings format.', 'acemedia-block-roles'));
+        wp_send_json_error(esc_html__('Invalid settings format.', 'acemedia-block-roles'));
     }
 
+    // Sanitize settings
+    $sanitized_settings = array_map(function($roles) {
+        return array_map('absint', $roles);
+    }, $block_roles_settings);
+
     // Save settings
-    update_option('block_roles_settings', $block_roles_settings);
+    update_option('block_roles_settings', $sanitized_settings);
 
     // Send a success response with updated settings
     wp_send_json_success([
-        'message' => __('Settings imported successfully.', 'acemedia-block-roles'),
-        'updated_settings' => $block_roles_settings // Return updated settings
+        'message' => esc_html__('Settings imported successfully.', 'acemedia-block-roles'),
+        'updated_settings' => $sanitized_settings // Return updated settings
     ]);
 }
 add_action('wp_ajax_acemedia_block_roles_import_settings', 'acemedia_block_roles_import_settings');
