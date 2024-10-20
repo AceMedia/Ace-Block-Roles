@@ -34,12 +34,12 @@ function block_roles_enqueue_admin_scripts($hook) {
     wp_enqueue_script('wp-data'); // Data handling (optional)
     wp_enqueue_script('wp-dom-ready'); // To ensure DOM is ready
 
-    wp_enqueue_style('block-roles-css', plugins_url('assets/css/style-block-roles.min.css', __FILE__));
+    wp_enqueue_style('block-roles-css', plugins_url('build/css/style-block-roles.min.css', __FILE__));
 
     // Enqueue your custom JavaScript file to fetch block icons
     wp_enqueue_script(
         'block-roles-fetch',
-        plugin_dir_url(__FILE__) . 'assets/js/block-roles.min.js', // Path to your custom JavaScript file
+        plugin_dir_url(__FILE__) . 'build/js/block-roles.min.js', // Path to your custom JavaScript file
         array('wp-blocks', 'wp-element', 'wp-components', 'wp-data', 'wp-dom-ready'), // Dependencies
         false,
         true
