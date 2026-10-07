@@ -5,6 +5,8 @@
  * Version: 0.42
  * Author: Shane Rounce
  * Text Domain: acemedia-block-roles
+ * License:     GPL-2.0-or-later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
 
 // Add settings page in the admin menu
